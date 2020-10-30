@@ -67,7 +67,7 @@ def main():
 retry_params = {'retries': 10, 'delay': 10, 'catch_extra_error_codes': ['TooManyRequestsException']}
 
 @AWSRetry.jittered_backoff(**retry_params)
-def get_vpc_links(client, id):
+def get_vpc_links(client):
     return client.get_vpc_links(limit=500)
 
 if __name__ == '__main__':
