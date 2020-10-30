@@ -94,7 +94,7 @@ retry_params = {'retries': 10, 'delay': 10, 'catch_extra_error_codes': ['TooMany
 
 @AWSRetry.jittered_backoff(**retry_params)
 def get_method(client, rest_api_id, resource_id, http_method):
-    return client.get_method(restApiId=rest_api_id, resourceId=resource_id, httpMethod=http_method, limit=500)
+    return client.get_method(restApiId=rest_api_id, resourceId=resource_id, httpMethod=http_method)
 
 if __name__ == '__main__':
     main()
