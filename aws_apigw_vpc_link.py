@@ -5,11 +5,11 @@ __metaclass__ = type
 
 DOCUMENTATION = r'''
 ---
-module: aws_create_vpc_link
+module: aws_apigw_vpc_link
 version_added: 0.1
-short_description: Create VPC link
+short_description: Manage VPC link
 description:
-  - Create Amazon API Gateway VPC link
+  - Manage Amazon API Gateway VPC link
 requirements: [ boto3 ]
 author: '@jr9000'
 options:
@@ -50,7 +50,7 @@ extends_documentation_fragment:
 EXAMPLES = r'''
 # Note: These examples do not set authentication details, see the AWS Guide for details.
 - name: Create VPC Link
-  aws_vpc_link:
+  aws_apigw_vpc_link:
     name: mylink
     state: present
     description: 'some description'
@@ -60,7 +60,7 @@ EXAMPLES = r'''
       version: 15
       sometag: yes
 - name: Delete VPC Link
-  aws_vpc_link:
+  aws_apigw_vpc_link:
     id: zhbmrd
     state: absent
 '''
