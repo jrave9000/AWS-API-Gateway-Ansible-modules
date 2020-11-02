@@ -128,7 +128,7 @@ def main():
                 error_msg = 'VPC link for target arns already exists with the different name: ' + i['name']
                 module.fail_json(msg=error_msg)
 
-    msg = create_vpc_link(client, name, target_arns, description)
+    msg = create_vpc_link(client, name, target_arns, description, tags)
     
     exit_args['msg'] = camel_dict_to_snake_dict(msg)
     exit_args['changed'] = changed
