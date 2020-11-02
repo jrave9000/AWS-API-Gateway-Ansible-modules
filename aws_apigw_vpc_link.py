@@ -37,7 +37,11 @@ options:
   description:
     description: The description of the VPC link.
     type: str
-
+  tags:
+    description:
+      - The key-value map of strings. The valid character set is I([a-zA-Z+-=._:/]). The tag key can be up to 128 characters and must not start with I(aws:). The tag value can be up to 256 characters.
+    type: dict
+    elements: str
 extends_documentation_fragment:
 - amazon.aws.aws
 - amazon.aws.ec2
@@ -50,9 +54,11 @@ EXAMPLES = r'''
     name: mylink
     state: present
     description: 'some description'
-      target_arns:
-        - 'arn:aws:elasticloadbalancing:region-code:account-id:loadbalancer/net/load-balancer-name/load-balancer-id'
-
+    target_arns:
+      - 'arn:aws:elasticloadbalancing:region-code:account-id:loadbalancer/net/load-balancer-name/load-balancer-id'
+    tags:
+      version: 15
+      sometag: yes
 - name: Delete VPC Link
   aws_vpc_link:
     id: zhbmrd
@@ -87,6 +93,7 @@ def main():
         description=dict(type='str', default=''),
         state=dict(default='present', choices=['present', 'absent']),
         id=dict(type='str')
+        tags=dict(type='dict', elements='str')
     )
 
     module = AnsibleAWSModule(
@@ -103,6 +110,7 @@ def main():
     description = module.params.get('description')
     id = module.params.get('id')
     state = module.params.get('state')
+    tags = module.params.get('tags')
     changed = True
     exit_args = {}
     msg = ''
@@ -138,8 +146,8 @@ def delete_vpc_link(client, id):
     return client.delete_vpc_link(vpcLinkId=id)
 
 @AWSRetry.jittered_backoff(**retry_params)
-def create_vpc_link(client, name,target_arns, description=None):
-    return client.create_vpc_link(name=name, description=description, targetArns=target_arns)
+def create_vpc_link(client, name,target_arns, description=None, tags):
+    return client.create_vpc_link(name=name, description=description, targetArns=target_arns, tags=tags)
 
 if __name__ == '__main__':
     main()
