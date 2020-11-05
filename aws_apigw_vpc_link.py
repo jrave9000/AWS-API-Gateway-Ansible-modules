@@ -29,6 +29,7 @@ options:
       - Create or delete VPC link.
       - When I(state=absent), I(id) is required.
       - When I(state=present), then I(name) and I(target_arns) are required.
+    default: present
   id:
     description:
       - The identifier of the Vpc link.
