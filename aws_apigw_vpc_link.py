@@ -121,13 +121,13 @@ def main():
         delete_vpc_link(client, id)
     elif state == 'present':
         vpc_link_list = camel_dict_to_snake_dict(get_vpc_link_list(client))
-    for i in vpc_link_list['items']:
-        if i['target_arns'] == target_arns:
-            if i['name'] == name and i['status'] != 'FAILED':
-                module.exit_json(changed=False, msg=i)
-            else:
-                error_msg = 'VPC link for target arns already exists with the different name: ' + i['name']
-                module.fail_json(msg=error_msg)
+        for i in vpc_link_list['items']:
+            if i['target_arns'] == target_arns:
+                if i['name'] == name and i['status'] != 'FAILED':
+                    module.exit_json(changed=False, msg=i)
+                else:
+                    error_msg = 'VPC link for target arns already exists with the different name: ' + i['name']
+                    module.fail_json(msg=error_msg)
 
     msg = create_vpc_link(client, name, target_arns, description, tags)
     
