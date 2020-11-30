@@ -118,7 +118,7 @@ def main():
     client = module.client('apigateway')
     
     if state == 'absent':
-        delete_vpc_link(client, id)
+        msg = delete_vpc_link(client, id)
     elif state == 'present':
         vpc_link_list = camel_dict_to_snake_dict(get_vpc_link_list(client))
         for i in vpc_link_list['items']:
